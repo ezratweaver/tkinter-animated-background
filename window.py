@@ -1,4 +1,6 @@
 from tkinter import Tk, Canvas
+from assets import Assets
+
 
 WINDOW_COLOR = "#3556FB"
 window = Tk()
