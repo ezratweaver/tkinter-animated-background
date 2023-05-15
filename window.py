@@ -11,24 +11,38 @@ class Background:
         self.background.pack()
 
         self.circle1 = self.background.create_image(
-            100,
-            100,
+            179,
+            226,
             image=Assets.image_circle1
         )
 
-        print(self.background.coords(self.circle1))
 
-    def move_circle1(self):
-        current_cordinates = self.background.coords(self.circle1)
+    def move_object(self, object, 
+                    x_velocity, y_velocity,
+                    start_x, end_x,
+                    start_y, end_y):
+        current_cordinates = self.background.coords(object)
 
-        new_cords = [current_cordinates[0] + 3, current_cordinates[1]]
+        new_cords = [current_cordinates[0] + x_velocity, 
+                    current_cordinates[1] + y_velocity]
 
-        self.background.coords(self.circle1, *new_cords)
+        self.background.coords(object, *new_cords)
 
-        self.background.after(10, self.move_circle1)
+        if current_cordinates[0] < start_x:
+            x_velocity = 3
+        if current_cordinates[0] > end_x:
+            x_velocity = -3
+
+
+        self.background.after(30, self.move_object,
+                                        object, x_velocity, 
+                                        y_velocity, start_x, end_x,
+                                        start_y, end_y)
+
+
 
 bg = Background()
-bg.move_circle1()
+bg.move_object(bg.circle1, 3, 0, 50, 750, 0, 0)
 
 window.geometry("800x500")
 window.configure(bg=WINDOW_COLOR)
