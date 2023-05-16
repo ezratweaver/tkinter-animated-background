@@ -1,4 +1,4 @@
-from tkinter import Canvas, Label
+from tkinter import Canvas
 from assets import Assets, window, WINDOW_COLOR
 
 class Background:
@@ -17,7 +17,7 @@ class Background:
         )
 
 
-    def move_object(self, object, 
+    def move_object(self, object,
                     x_velocity, y_velocity,
                     start_x, end_x,
                     start_y, end_y):
@@ -28,11 +28,14 @@ class Background:
 
         self.background.coords(object, *new_cords)
 
+        
         if current_cordinates[0] < start_x:
-            x_velocity = 3
+            x_velocity = abs(x_velocity)
+            print(f"Current Cordinates: {current_cordinates[0]}  Velocity: {x_velocity}  Trigger: {start_x}  Point: Start")
         if current_cordinates[0] > end_x:
-            x_velocity = -3
-
+            x_velocity = -abs(x_velocity)
+            print(f"Current Cordinates: {current_cordinates[0]}  Velocity: {x_velocity}  Trigger: {end_x}  Point: End")
+        
 
         self.background.after(30, self.move_object,
                                         object, x_velocity, 
