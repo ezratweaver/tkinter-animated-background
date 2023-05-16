@@ -12,7 +12,7 @@ class Background:
 
         self.circle1 = self.background.create_image(
             59,
-            60,
+            80,
             image=Assets.image_circle1
         )
 
@@ -38,7 +38,7 @@ class Background:
         if current_cordinates[1] < start_y:
             y_velocity = abs(y_velocity)
             print(f"Current Cordinates: {current_cordinates[1]}  Velocity: {y_velocity}  Trigger: {start_y}  Axis: Y  Point: Start")
-        if current_cordinates[1] < end_y:
+        if current_cordinates[1] > end_y:
             y_velocity = -abs(y_velocity)
             print(f"Current Cordinates: {current_cordinates[1]}  Velocity: {y_velocity}  Trigger: {end_y}  Axis: Y  Point: End")
 
@@ -50,7 +50,7 @@ class Background:
 
 
 bg = Background()
-bg.move_object(bg.circle1, 0, 0, 50, 750, 0, 0)
+bg.move_object(bg.circle1, 0, 3, 50, 750, 0, 400)
 
 window.geometry("800x500")
 window.configure(bg=WINDOW_COLOR)
