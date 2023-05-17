@@ -10,3 +10,4 @@ window = Tk()
 
 class Assets():
     image_circle1 = PhotoImage(file="Assets/circle1.png")
+    image_square1 = PhotoImage(file="Assets/square1.png")
