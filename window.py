@@ -50,7 +50,7 @@ class Background:
 
 
 bg = Background()
-bg.move_object(bg.circle1, 0, 3, 50, 750, 0, 400)
+bg.move_object(bg.circle1, 3, 3, 50, 750, 50, 445)
 
 window.geometry("800x500")
 window.configure(bg=WINDOW_COLOR)
