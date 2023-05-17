@@ -16,6 +16,12 @@ class Background:
             image=Assets.image_circle1
         )
 
+        self.square1 = self.background.create_image(
+            659,
+            300,
+            image=Assets.image_square1
+        )
+
 
     def move_object(self, object,
                     x_velocity, y_velocity,
@@ -31,18 +37,15 @@ class Background:
         
         if current_cordinates[0] < start_x:
             x_velocity = abs(x_velocity)
-            print(f"Current Cordinates: {current_cordinates[0]}  Velocity: {x_velocity}  Trigger: {start_x}  Axis: X  Point: Start")
         if current_cordinates[0] > end_x:
             x_velocity = -abs(x_velocity)
-            print(f"Current Cordinates: {current_cordinates[0]}  Velocity: {x_velocity}  Trigger: {end_x}  Axis: X  Point: End")
         if current_cordinates[1] < start_y:
             y_velocity = abs(y_velocity)
-            print(f"Current Cordinates: {current_cordinates[1]}  Velocity: {y_velocity}  Trigger: {start_y}  Axis: Y  Point: Start")
         if current_cordinates[1] > end_y:
             y_velocity = -abs(y_velocity)
-            print(f"Current Cordinates: {current_cordinates[1]}  Velocity: {y_velocity}  Trigger: {end_y}  Axis: Y  Point: End")
 
-        self.background.after(30, self.move_object,
+
+        self.background.after(20, self.move_object,
                                         object, x_velocity, 
                                         y_velocity, start_x, end_x,
                                         start_y, end_y)
@@ -51,9 +54,10 @@ class Background:
 
 bg = Background()
 bg.move_object(bg.circle1, 3, 3, 50, 750, 50, 445)
+bg.move_object(bg.square1, 3, 3, 50, 750, 50, 445)
 
 window.geometry("800x500")
 window.configure(bg=WINDOW_COLOR)
-window.title("Tkinter Math Flash Cards")
+window.title("Wallpaper")
 window.resizable(False, False)
 window.mainloop()
