@@ -1,5 +1,6 @@
 from tkinter import Canvas
 from assets import Assets, window, WINDOW_COLOR
+from random import randint
 
 class Background:
 
@@ -11,17 +12,22 @@ class Background:
         self.background.pack()
 
         self.circle1 = self.background.create_image(
-            59,
-            80,
+            randint(1, 800),
+            randint(1, 500),
             image=Assets.image_circle1
         )
 
-        self.square1 = self.background.create_image(
-            659,
-            300,
-            image=Assets.image_square1
+        self.triangle1 = self.background.create_image(
+            randint(1, 800),
+            randint(1, 500),
+            image=Assets.image_triangle1
         )
 
+        self.square1 = self.background.create_image(
+            randint(1, 800),
+            randint(1, 500),
+            image=Assets.image_square2
+        )
 
     def move_object(self, object,
                     x_velocity, y_velocity,
@@ -34,7 +40,7 @@ class Background:
 
         self.background.coords(object, *new_cords)
 
-        
+
         if current_cordinates[0] < start_x:
             x_velocity = abs(x_velocity)
         if current_cordinates[0] > end_x:
@@ -51,13 +57,13 @@ class Background:
                                         start_y, end_y)
 
 
-
+move_object_args = [3, 3, 50, 750, 50, 445]
 bg = Background()
-bg.move_object(bg.circle1, 3, 3, 50, 750, 50, 445)
-bg.move_object(bg.square1, 3, 3, 50, 750, 50, 445)
+bg.move_object(bg.circle1, *move_object_args)
+bg.move_object(bg.triangle1, *move_object_args)
+bg.move_object(bg.square1, *move_object_args)
 
 window.geometry("800x500")
-window.configure(bg=WINDOW_COLOR)
 window.title("Wallpaper")
 window.resizable(False, False)
 window.mainloop()
