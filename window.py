@@ -43,14 +43,6 @@ class Background:
             y_velocity = -abs(y_velocity)
             print(f"Current Cordinates: {current_cordinates[1]}  Velocity: {y_velocity}  Trigger: {end_y}  Axis: Y  Point: End")
 
-        # for alien_object in self.placed_images:
-        #     alien_coords = self.background.coords(alien_object)
-        #     if Background.is_near(current_cordinates[0], alien_coords[0], 3):
-        #         x_velocity = abs(x_velocity)
-        #     if Background.is_near(current_cordinates[1], alien_coords[1], 3):
-        #         x_velocity = abs(y_velocity)
-
-
         self.background.after(20, self.move_object,
                                         object, x_velocity, 
                                         y_velocity, start_x, end_x,
