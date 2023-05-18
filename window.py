@@ -1,5 +1,5 @@
 from tkinter import Canvas
-from assets import Assets, window, WINDOW_COLOR
+from assets import asset_manifest, window, WINDOW_COLOR
 from random import randint
 
 class Background:
@@ -11,23 +11,13 @@ class Background:
                             relief="ridge")
         self.background.pack()
 
-        self.circle1 = self.background.create_image(
-            randint(1, 800),
-            randint(1, 500),
-            image=Assets.image_circle1
-        )
-
-        self.triangle1 = self.background.create_image(
-            randint(1, 800),
-            randint(1, 500),
-            image=Assets.image_triangle1
-        )
-
-        self.square1 = self.background.create_image(
-            randint(1, 800),
-            randint(1, 500),
-            image=Assets.image_square2
-        )
+        self.placed_images = []
+        for image in asset_manifest:
+            self.placed_images.append(self.background.create_image(
+                randint(1, 800),
+                randint(1, 500),
+                image=image
+            ))
 
     def move_object(self, object,
                     x_velocity, y_velocity,
@@ -55,13 +45,29 @@ class Background:
                                         object, x_velocity, 
                                         y_velocity, start_x, end_x,
                                         start_y, end_y)
+    
+    @staticmethod
+    def is_near(self, number, target, tolerance):
+        """
+        Checks if a number is near another number within a given tolerance.
+        
+        Args:
+            self: The class object
+            number (float): The number to be checked.
+            target (float): The target number.
+            tolerance (float): The allowable difference between the numbers.
+            
+        Returns:
+            bool: True if the number is near the target within the tolerance
+        """
+        return abs(number - target) <= tolerance
 
 
-move_object_args = [3, 3, 50, 750, 50, 445]
+move_object_args = [3, 3, 0, 800, 0, 500]
 bg = Background()
-bg.move_object(bg.circle1, *move_object_args)
-bg.move_object(bg.triangle1, *move_object_args)
-bg.move_object(bg.square1, *move_object_args)
+
+for placed_image in bg.placed_images:
+    bg.move_object(placed_image, *move_object_args)
 
 window.geometry("800x500")
 window.title("Wallpaper")
