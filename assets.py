@@ -20,3 +20,6 @@ class Assets():
     image_star2 = PhotoImage(file="Assets/star2.png")
     image_star3 = PhotoImage(file="Assets/star3.png")
     image_triangle1 = PhotoImage(file="Assets/triangle1.png")
+
+
+asset_manifest = [getattr(Assets, x) for x in dir(Assets) if x.startswith("image")]
