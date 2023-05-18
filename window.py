@@ -76,9 +76,12 @@ class Background:
 move_object_args = [randint(-3, 3), randint(-3, 3), 0, 800, 0, 500]
 bg = Background()
 
-random_velocity = [-3, -2, -1, 1, 2, 3]
+random_velocity = [-2, -1, 1, 2]
 for placed_image in bg.placed_images:
-    bg.move_object(placed_image, choice(random_velocity), choice(random_velocity), 0, 800, 0, 500)
+    bg.move_object(
+        placed_image, choice(random_velocity), 
+        choice(random_velocity), 0, 800, 
+        0, 500)
 
 window.geometry("800x500")
 window.title("Wallpaper")
