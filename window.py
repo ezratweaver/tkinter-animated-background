@@ -32,7 +32,7 @@ class BackgroundObject:
         self.end_x = end_x
         self.start_y = start_y
         self.end_y = end_y
-        self.position_manifest = []
+        self.cordinates = [0, 0]
 
     def start_animation(self):
         current_cordinates = bg.background.coords(self.object)
@@ -40,7 +40,8 @@ class BackgroundObject:
         new_cords = [current_cordinates[0] + self.x_velocity, 
                     current_cordinates[1] + self.y_velocity]
 
-        bg.background.coords(self.object, *new_cords)
+        self.cordinates = new_cords
+        bg.background.coords(self.object, *self.cordinates)
 
         if BackgroundObject.is_near(current_cordinates[0], self.start_x, 3):
             self.x_velocity = abs(self.x_velocity)
@@ -51,11 +52,16 @@ class BackgroundObject:
         if BackgroundObject.is_near(current_cordinates[1], self.end_y, 3):
             self.y_velocity = -abs(self.y_velocity)
 
-        
-
-        self.position_manifest.clear()
-        self.position_manifest.append({self.id : (self.x_velocity, 
-                                        self.y_velocity, new_cords)})
+        for obj in moving_objects:
+            if obj.id == self.id:
+                continue
+            if BackgroundObject.is_near(self.cordinates[0], obj.cordinates[0], 6
+            ) and BackgroundObject.is_near(self.cordinates[1], obj.cordinates[1], 6):
+                print(f"Collision: {self.cordinates} {obj.cordinates}")
+                self.x_velocity = self.x_velocity * -1
+                self.y_velocity = self.y_velocity * -1
+                obj.x_velocity = obj.x_velocity * -1
+                obj.y_velocity = obj.y_velocity * -1
 
         bg.background.after(20, self.start_animation)
         
@@ -83,12 +89,6 @@ for x, placed_image in enumerate(bg.placed_images):
     moving_objects.append(BackgroundObject(x, placed_image, 0, 800, 0, 500))
 for object in moving_objects:
     object.start_animation()
-
-def pr():
-    for obj in moving_objects:
-        print(obj.position_manifest)
-    bg.background.after(100, pr)
-pr()
 
 window.geometry("800x500")
 window.title("Wallpaper")
