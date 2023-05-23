@@ -16,13 +16,15 @@ class Background:
             self.placed_images.append(self.background.create_image(
                 randint(1, 800),
                 randint(1, 500),
-                image=image
-            ))
+                image=image))
+            
+        self.object_data_manifest = []
 
 class BackgroundObject:
 
-    def __init__(self, object, start_x, end_x, start_y, end_y):
+    def __init__(self, name, object, start_x, end_x, start_y, end_y):
         random_velocity = [-2, -1, 1, 2]
+        self.name = name
         self.object = object
         self.x_velocity = choice(random_velocity)
         self.y_velocity = choice(random_velocity)
@@ -30,12 +32,18 @@ class BackgroundObject:
         self.end_x = end_x
         self.start_y = start_y
         self.end_y = end_y
+        self.position_manifest = []
 
     def start_animation(self, *args):
         current_cordinates = bg.background.coords(self.object)
 
         new_cords = [current_cordinates[0] + self.x_velocity, 
                     current_cordinates[1] + self.y_velocity]
+        
+        self.position_manifest.clear()
+        self.position_manifest.append({self.name : (
+            self.object, self.x_velocity, self.y_velocity, 
+            self.start_x, self.end_x, self.start_y, self.end_x, new_cords)})
 
         bg.background.coords(self.object, *new_cords)
 
@@ -49,9 +57,9 @@ class BackgroundObject:
             self.y_velocity = -abs(self.y_velocity)
 
         bg.background.after(20, self.start_animation,
-                                        object, self.x_velocity, 
-                                        self.y_velocity, self.start_x, self.end_x,
-                                        self.start_y, self.end_y)
+                            object, self.x_velocity, 
+                            self.y_velocity, self.start_x, self.end_x,
+                            self.start_y, self.end_y)
         
     @staticmethod
     def is_near(number, target, tolerance):
@@ -73,10 +81,15 @@ class BackgroundObject:
 bg = Background()
 
 moving_objects = []
-for placed_image in bg.placed_images:
-    moving_objects.append(BackgroundObject(placed_image, 0, 800, 0, 500))
+for x, placed_image in enumerate(bg.placed_images):
+    moving_objects.append(BackgroundObject(f"object{x}", placed_image, 0, 800, 0, 500))
 for object in moving_objects:
     object.start_animation()
+
+def pr():
+    print(moving_objects[0].position_manifest)
+    bg.background.after(100, pr)
+pr()
 
 window.geometry("800x500")
 window.title("Wallpaper")
