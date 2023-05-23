@@ -2,6 +2,8 @@ from tkinter import Canvas
 from assets import asset_manifest, window, WINDOW_COLOR
 from random import randint, choice
 
+COLLISION_TOLERANCE = 12
+
 class Background:
 
     def __init__(self):
@@ -55,8 +57,10 @@ class BackgroundObject:
         for obj in moving_objects:
             if obj.id == self.id:
                 continue
-            if BackgroundObject.is_near(self.cordinates[0], obj.cordinates[0], 6
-            ) and BackgroundObject.is_near(self.cordinates[1], obj.cordinates[1], 6):
+            if BackgroundObject.is_near(self.cordinates[0], 
+                obj.cordinates[0], COLLISION_TOLERANCE
+            ) and BackgroundObject.is_near(self.cordinates[1], 
+                obj.cordinates[1], COLLISION_TOLERANCE):
                 print(f"Collision: {self.cordinates} {obj.cordinates}")
                 self.x_velocity = self.x_velocity * -1
                 self.y_velocity = self.y_velocity * -1
