@@ -17,4 +17,4 @@ class Assets():
 
 
 asset_manifest = [getattr(Assets, x) for x in dir(Assets) if x.startswith("image")]
-asset_manifest = list(chain(asset_manifest * 7))
+asset_manifest = list(chain(asset_manifest * 3))
