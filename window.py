@@ -2,8 +2,6 @@ from tkinter import Canvas
 from assets import asset_manifest, window, WINDOW_COLOR
 from random import randint, choice
 
-COLLISION_TOLERANCE = 14
-
 class Background:
 
     def __init__(self):
@@ -16,20 +14,20 @@ class Background:
         self.placed_images = []
         for image in asset_manifest:
             self.placed_images.append(self.background.create_image(
-                randint(1, 800),
-                randint(1, 500),
+                randint(0, 800),
+                randint(0, 500),
                 image=image))
-            
-        self.object_data_manifest = []
 
-random_velocity = [-2, -1, 1, 2]
+RANDOM_VELOCITY = [-2, -1, 1, 2]
+COLLISION_TOLERANCE = 14
+
 class BackgroundObject:
 
     def __init__(self, id, object, start_x, end_x, start_y, end_y):
         self.id = id
         self.object = object
-        self.x_velocity = choice(random_velocity)
-        self.y_velocity = choice(random_velocity)
+        self.x_velocity = choice(RANDOM_VELOCITY)
+        self.y_velocity = choice(RANDOM_VELOCITY)
         self.start_x = start_x
         self.end_x = end_x
         self.start_y = start_y
@@ -38,11 +36,6 @@ class BackgroundObject:
 
     def start_animation(self):
         current_cordinates = bg.background.coords(self.object)
-
-        self.cordinates = [current_cordinates[0] + self.x_velocity, 
-                    current_cordinates[1] + self.y_velocity]
-
-        bg.background.coords(self.object, *self.cordinates)
 
         if BackgroundObject.is_near(current_cordinates[0], self.start_x, 3):
             self.x_velocity = abs(self.x_velocity)
@@ -62,6 +55,11 @@ class BackgroundObject:
                 obj.cordinates[1], COLLISION_TOLERANCE):
                 self.x_velocity = self.x_velocity * -1
                 self.y_velocity = self.y_velocity * -1
+
+        self.cordinates = [current_cordinates[0] + self.x_velocity, 
+                    current_cordinates[1] + self.y_velocity]
+
+        bg.background.coords(self.object, *self.cordinates)
 
         bg.background.after(20, self.start_animation)
 
