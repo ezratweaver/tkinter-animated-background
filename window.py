@@ -2,7 +2,7 @@ from tkinter import Canvas
 from assets import asset_manifest, window, WINDOW_COLOR
 from random import randint, choice
 
-COLLISION_TOLERANCE = 12
+COLLISION_TOLERANCE = 14
 
 class Background:
 
@@ -22,10 +22,10 @@ class Background:
             
         self.object_data_manifest = []
 
+random_velocity = [-2, -1, 1, 2]
 class BackgroundObject:
 
     def __init__(self, id, object, start_x, end_x, start_y, end_y):
-        random_velocity = [-2, -1, 1, 2]
         self.id = id
         self.object = object
         self.x_velocity = choice(random_velocity)
@@ -39,10 +39,9 @@ class BackgroundObject:
     def start_animation(self):
         current_cordinates = bg.background.coords(self.object)
 
-        new_cords = [current_cordinates[0] + self.x_velocity, 
+        self.cordinates = [current_cordinates[0] + self.x_velocity, 
                     current_cordinates[1] + self.y_velocity]
 
-        self.cordinates = new_cords
         bg.background.coords(self.object, *self.cordinates)
 
         if BackgroundObject.is_near(current_cordinates[0], self.start_x, 3):
@@ -61,14 +60,11 @@ class BackgroundObject:
                 obj.cordinates[0], COLLISION_TOLERANCE
             ) and BackgroundObject.is_near(self.cordinates[1], 
                 obj.cordinates[1], COLLISION_TOLERANCE):
-                print(f"Collision: {self.cordinates} {obj.cordinates}")
                 self.x_velocity = self.x_velocity * -1
                 self.y_velocity = self.y_velocity * -1
-                obj.x_velocity = obj.x_velocity * -1
-                obj.y_velocity = obj.y_velocity * -1
 
         bg.background.after(20, self.start_animation)
-        
+
     @staticmethod
     def is_near(number, target, tolerance):
         """
@@ -84,7 +80,6 @@ class BackgroundObject:
             bool: True if the number is near the target within the tolerance
         """
         return abs(number - target) <= tolerance
-
 
 bg = Background()
 
