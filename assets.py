@@ -13,8 +13,7 @@ class Assets():
     image_circle = PhotoImage(file="Assets/circle.png")
     image_square = PhotoImage(file="Assets/square.png")
     image_star = PhotoImage(file="Assets/star.png")
-    image_triangle = PhotoImage(file="Assets/triangle.png")
-
+    image_triangle = PhotoImage(file="Assets/triangle.png")    
 
 asset_manifest = [getattr(Assets, x) for x in dir(Assets) if x.startswith("image")]
 asset_manifest = list(chain(asset_manifest * 3))

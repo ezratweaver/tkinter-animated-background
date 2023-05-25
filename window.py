@@ -19,7 +19,7 @@ class Background:
                 image=image))
 
 RANDOM_VELOCITY = [-2, -1, 1, 2]
-COLLISION_TOLERANCE = 14
+COLLISION_TOLERANCE = 40
 
 class BackgroundObject:
 
